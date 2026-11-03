@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Array Objects</title>
+</head>
+
+<body>
+
+    <h1>JavaScript Array Objects</h1>
+
+    <p>
+        Create an Array, Append an Object and Check
+        Whether the Appended Object is an Array
+    </p>
+
+
+    <!-- Create Array -->
+
+    <h2>Create Array</h2>
+
+    Enter Maximum Array Length
+
+    <input type="number" id="maxLength"
+           placeholder="Example: 4">
+
+    <br>
+
+    <button onclick="setLength()">Set Array Length</button>
+    <button onclick="resetAll()">Reset</button>
+
+
+    <!-- Enter Array Elements -->
+
+    <h2>Enter Array Elements</h2>
+
+    <p>
+        Enter one element at a time. You can enter
+        numbers, strings, booleans, objects, arrays or null.
+    </p>
+
+    Enter Element
+
+    <input type="text" id="elementInput"
+           placeholder="Example: 10, Hello, true, [1,2]">
+
+    <br>
+
+    <button onclick="addElement()">Add Element</button>
+    <button onclick="resetElements()">Reset</button>
+
+
+    <h3>Entered Elements</h3>
+
+    <p id="enteredElements">[ ]</p>
+
+
+    <!-- Append New Object -->
+
+    <h2>Append New Object</h2>
+
+    <p>
+        The initial array has reached its maximum length.
+        Enter a new object or value to append it to the array.
+    </p>
+
+    Enter Object to Append
+
+    <input type="text" id="appendInput"
+           placeholder='Example: [10,20] or {"name":"John"}'>
+
+    <br>
+
+    <button onclick="appendObject()">Append Object</button>
+    <button onclick="resetAppend()">Reset</button>
+
+
+    <!-- Appended Object Result -->
+
+    <h2>Appended Object Result</h2>
+
+    <p>Appended Object</p>
+
+    <p id="objectResult">-</p>
+
+    <p>Array.isArray() Result</p>
+
+    <p id="arrayResult">-</p>
+
+
+    <!-- Current Array -->
+
+    <h2>Current Array</h2>
+
+    <p id="currentArray">Array not created yet.</p>
+
+
+    <script>
+
+        let arr = [];
+        let maxLength = 0;
+        let created = false;
+
+
+        // Set Maximum Array Length
+
+        function setLength() {
+
+            maxLength = Number(
+                document.getElementById("maxLength").value
+            );
+
+            if (maxLength <= 0 || !Number.isInteger(maxLength)) {
+                alert("Enter a valid maximum length.");
+                return;
+            }
+
+            arr = [];
+            created = true;
+
+            document.getElementById("enteredElements").textContent = "[ ]";
+
+            document.getElementById("objectResult").textContent = "-";
+
+            document.getElementById("arrayResult").textContent = "-";
+
+            displayArray();
+
+        }
+
+
+        // Convert Input into Appropriate Data Type
+
+        function getValue(input) {
+
+            try {
+                return JSON.parse(input);
+            }
+            catch {
+                return input;
+            }
+
+        }
+
+
+        // Add Array Elements
+
+        function addElement() {
+
+            if (!created) {
+                alert("First set the array length.");
+                return;
+            }
+
+            let input = document.getElementById("elementInput").value;
+
+            if (input.trim() === "") {
+                alert("Enter an element.");
+                return;
+            }
+
+            if (arr.length >= maxLength) {
+                alert("Maximum array length reached.");
+                return;
+            }
+
+            let value = getValue(input);
+
+            arr.push(value);
+
+            document.getElementById("elementInput").value = "";
+
+            document.getElementById("enteredElements").textContent =
+                JSON.stringify(arr);
+
+            displayArray();
+
+        }
+
+
+        // Append New Object
+
+        function appendObject() {
+
+            if (!created) {
+                alert("First create an array.");
+                return;
+            }
+
+            if (arr.length !== maxLength) {
+                alert("First fill the initial array completely.");
+                return;
+            }
+
+            let input = document.getElementById("appendInput").value;
+
+            if (input.trim() === "") {
+                alert("Enter an object or value.");
+                return;
+            }
+
+            let obj = getValue(input);
+
+            // Append Object to Array
+
+            arr.push(obj);
+
+            // Display Appended Object
+
+            document.getElementById("objectResult").textContent =
+                JSON.stringify(obj);
+
+            // Check Whether Object is an Array
+
+            let result = Array.isArray(obj);
+
+            document.getElementById("arrayResult").textContent =
+                result;
+
+            displayArray();
+
+        }
+
+
+        // Display Current Array
+
+        function displayArray() {
+
+            document.getElementById("currentArray").textContent =
+                JSON.stringify(arr);
+
+        }
+
+
+        // Reset Elements
+
+        function resetElements() {
+
+            arr = [];
+
+            document.getElementById("elementInput").value = "";
+
+            document.getElementById("enteredElements").textContent = "[ ]";
+
+            document.getElementById("objectResult").textContent = "-";
+
+            document.getElementById("arrayResult").textContent = "-";
+
+            if (created) {
+                displayArray();
+            }
+
+        }
+
+
+        // Reset Append Object
+
+        function resetAppend() {
+
+            document.getElementById("appendInput").value = "";
+
+            document.getElementById("objectResult").textContent = "-";
+
+            document.getElementById("arrayResult").textContent = "-";
+
+        }
+
+
+        // Reset All
+
+        function resetAll() {
+
+            arr = [];
+            maxLength = 0;
+            created = false;
+
+            document.getElementById("maxLength").value = "";
+
+            document.getElementById("elementInput").value = "";
+
+            document.getElementById("appendInput").value = "";
+
+            document.getElementById("enteredElements").textContent = "[ ]";
+
+            document.getElementById("objectResult").textContent = "-";
+
+            document.getElementById("arrayResult").textContent = "-";
+
+            document.getElementById("currentArray").textContent =
+                "Array not created yet.";
+
+        }
+
+    </script>
+
+</body>
+</html>

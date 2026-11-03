@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Event Handling</title>
+</head>
+
+<body>
+
+    <center>
+
+        <h1>JavaScript Event Handling</h1>
+
+        <!-- Mouse Over Event -->
+
+        <fieldset id="mouseBox"
+                  onmouseover="mouseOver()"
+                  onmouseout="mouseOut()">
+
+            <h2>Mouse Over Event</h2>
+
+            <p id="mouseMessage">Mouse left the box.</p>
+
+        </fieldset>
+
+        <br>
+
+        <!-- Focus and Blur Events -->
+
+        <fieldset id="focusBox">
+
+            <h2>Focus and Blur Events</h2>
+
+            <input type="text"
+                   id="username"
+                   placeholder="Click and type your name"
+                   onfocus="focusEvent()"
+                   onblur="blurEvent()">
+
+            <p id="focusMessage">The input lost focus.</p>
+
+        </fieldset>
+
+    </center>
+
+
+    <script>
+
+        // Set box dimensions
+
+        document.getElementById("mouseBox").style.width = "600px";
+        document.getElementById("mouseBox").style.height = "130px";
+
+        document.getElementById("focusBox").style.width = "600px";
+        document.getElementById("focusBox").style.height = "180px";
+
+        document.getElementById("username").style.width = "450px";
+        document.getElementById("username").style.padding = "10px";
+
+
+        // Mouse Over Event
+
+        function mouseOver() {
+
+            document.getElementById("mouseBox").style.backgroundColor = "lightblue";
+
+            document.getElementById("mouseMessage").textContent =
+                "Mouse is over the box.";
+
+        }
+
+
+        // Mouse Out Event
+
+        function mouseOut() {
+
+            document.getElementById("mouseBox").style.backgroundColor = "white";
+
+            document.getElementById("mouseMessage").textContent =
+                "Mouse left the box.";
+
+        }
+
+
+        // Focus Event
+
+        function focusEvent() {
+
+            document.getElementById("username").style.backgroundColor = "lightyellow";
+
+            document.getElementById("focusMessage").textContent =
+                "The input has focus.";
+
+        }
+
+
+        // Blur Event
+
+        function blurEvent() {
+
+            document.getElementById("username").style.backgroundColor = "white";
+
+            document.getElementById("focusMessage").textContent =
+                "The input lost focus.";
+
+        }
+
+    </script>
+
+</body>
+</html>

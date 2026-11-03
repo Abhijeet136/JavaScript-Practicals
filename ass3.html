@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>String Operations</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>String Operations</h1>
+
+    <!-- Reverse String -->
+    <div class="card">
+        <h2>Reverse String</h2>
+
+        <input type="text" id="reverseInput"
+               placeholder="Enter a string">
+
+        <button onclick="reverseString()">Reverse</button>
+        <button onclick="resetReverse()">Reset</button>
+
+        <p id="reverseResult"></p>
+    </div>
+
+
+    <!-- Replace Character -->
+    <div class="card">
+        <h2>Replace Character</h2>
+
+        <input type="text" id="replaceInput"
+               placeholder="Enter a string">
+
+        <input type="text" id="oldChar"
+               placeholder="Old character">
+
+        <input type="text" id="newChar"
+               placeholder="New character">
+
+        <button onclick="replaceCharacter()">Replace</button>
+        <button onclick="resetReplace()">Reset</button>
+
+        <p id="replaceResult"></p>
+    </div>
+
+
+    <!-- Palindrome -->
+    <div class="card">
+        <h2>Palindrome Check</h2>
+
+        <input type="text" id="palindromeInput"
+               placeholder="Enter a string">
+
+        <button onclick="checkPalindrome()">Check</button>
+        <button onclick="resetPalindrome()">Reset</button>
+
+        <p id="palindromeResult"></p>
+    </div>
+
+    <button onclick="resetAll()">Reset All</button>
+
+</div>
+
+
+<script>
+
+// 1. Reverse String
+
+function reverseString() {
+
+    let str = document.getElementById("reverseInput").value;
+
+    // User-defined logic
+    let reverse = "";
+
+    for (let i = str.length - 1; i >= 0; i--) {
+        reverse += str[i];
+    }
+
+    // Built-in function
+    let builtIn = str.split("").reverse().join("");
+
+    document.getElementById("reverseResult").innerHTML =
+        "Using Logic: " + reverse +
+        "<br>Using Built-in: " + builtIn;
+}
+
+
+// 2. Replace Character
+
+function replaceCharacter() {
+
+    let str = document.getElementById("replaceInput").value;
+    let oldChar = document.getElementById("oldChar").value;
+    let newChar = document.getElementById("newChar").value;
+
+    if (oldChar.length !== 1) {
+        document.getElementById("replaceResult").textContent =
+            "Enter exactly one old character.";
+        return;
+    }
+
+    // User-defined logic
+    let result = "";
+
+    for (let i = 0; i < str.length; i++) {
+
+        if (str[i] === oldChar) {
+            result += newChar;
+        } else {
+            result += str[i];
+        }
+    }
+
+    // Built-in function
+    let builtIn = str.replaceAll(oldChar, newChar);
+
+    document.getElementById("replaceResult").innerHTML =
+        "Using Logic: " + result +
+        "<br>Using Built-in: " + builtIn;
+}
+
+
+// 3. Palindrome Check
+
+function checkPalindrome() {
+
+    let str = document.getElementById("palindromeInput").value;
+
+    // User-defined logic
+    let reverse = "";
+
+    for (let i = str.length - 1; i >= 0; i--) {
+        reverse += str[i];
+    }
+
+    let logicResult = (str === reverse);
+
+    // Built-in function
+    let builtInResult =
+        (str === str.split("").reverse().join(""));
+
+    document.getElementById("palindromeResult").innerHTML =
+        "Using Logic: " +
+        (logicResult ? "Palindrome" : "Not Palindrome") +
+        "<br>Using Built-in: " +
+        (builtInResult ? "Palindrome" : "Not Palindrome");
+}
+
+
+// Reset Reverse
+
+function resetReverse() {
+    document.getElementById("reverseInput").value = "";
+    document.getElementById("reverseResult").textContent = "";
+}
+
+
+// Reset Replace
+
+function resetReplace() {
+    document.getElementById("replaceInput").value = "";
+    document.getElementById("oldChar").value = "";
+    document.getElementById("newChar").value = "";
+    document.getElementById("replaceResult").textContent = "";
+}
+
+
+// Reset Palindrome
+
+function resetPalindrome() {
+    document.getElementById("palindromeInput").value = "";
+    document.getElementById("palindromeResult").textContent = "";
+}
+
+
+// Reset All
+
+function resetAll() {
+    resetReverse();
+    resetReplace();
+    resetPalindrome();
+}
+
+</script>
+
+</body>
+</html>

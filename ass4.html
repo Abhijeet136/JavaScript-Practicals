@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>String Comparison</title>
+</head>
+
+<body>
+
+    <h1>String Comparison</h1>
+
+    String 1
+    <input type="text" id="str1" placeholder="Enter first string">
+
+    <br>
+
+    String 2
+    <input type="text" id="str2" placeholder="Enter second string">
+
+    <br>
+
+    <button onclick="compareStrings()">Compare Strings</button>
+    <button onclick="resetForm()">Reset</button>
+
+
+    <h2>Built-in JavaScript Methods</h2>
+
+    <p>String Length</p>
+    <p id="lengthResult">-</p>
+
+    <p>Alphabetical Comparison</p>
+    <p id="alphabetResult">-</p>
+
+    <p>Regular Expression</p>
+    <p id="regexResult">-</p>
+
+
+    <h2>Equality Operators</h2>
+
+    <p>Equality (==) - After toUpperCase()</p>
+    <p id="upperResult">-</p>
+
+    <p>Equality (==) - After toLowerCase()</p>
+    <p id="lowerResult">-</p>
+
+    <p>Strict Equality (===)</p>
+    <p id="strictResult">-</p>
+
+
+    <h2>User-Defined Logic</h2>
+
+    <p>Length Comparison</p>
+    <p id="userLengthResult">-</p>
+
+    <p>Alphabetical Comparison</p>
+    <p id="userAlphabetResult">-</p>
+
+
+    <script>
+
+        function compareStrings() {
+
+            let s1 = document.getElementById("str1").value;
+            let s2 = document.getElementById("str2").value;
+
+
+            if (s1 === "" || s2 === "") {
+                alert("Please enter both strings.");
+                return;
+            }
+
+
+            // 1. Built-in String Length
+
+            document.getElementById("lengthResult").textContent =
+                "String 1: " + s1.length +
+                " | String 2: " + s2.length;
+
+
+            // 2. Built-in Alphabetical Comparison
+
+            let compare = s1.localeCompare(s2);
+
+            let alphabet;
+
+            if (compare < 0) {
+                alphabet = "String 1 comes first.";
+            }
+            else if (compare > 0) {
+                alphabet = "String 2 comes first.";
+            }
+            else {
+                alphabet = "Both strings are equal.";
+            }
+
+            document.getElementById("alphabetResult").textContent =
+                alphabet;
+
+
+            // 3. Regular Expression
+
+            let pattern = /^[a-zA-Z]+$/;
+
+            let result1 = pattern.test(s1);
+            let result2 = pattern.test(s2);
+
+            document.getElementById("regexResult").textContent =
+                "String 1: " + (result1 ? "Valid" : "Invalid") +
+                " | String 2: " + (result2 ? "Valid" : "Invalid");
+
+
+            // 4. Equality After Uppercase
+
+            document.getElementById("upperResult").textContent =
+                s1.toUpperCase() == s2.toUpperCase();
+
+
+            // 5. Equality After Lowercase
+
+            document.getElementById("lowerResult").textContent =
+                s1.toLowerCase() == s2.toLowerCase();
+
+
+            // 6. Strict Equality
+
+            document.getElementById("strictResult").textContent =
+                s1 === s2;
+
+
+            // 7. User-Defined Length Comparison
+
+            let userLength;
+
+            if (s1.length > s2.length) {
+                userLength = "String 1 is longer.";
+            }
+            else if (s1.length < s2.length) {
+                userLength = "String 2 is longer.";
+            }
+            else {
+                userLength = "Both strings have equal length.";
+            }
+
+            document.getElementById("userLengthResult").textContent =
+                userLength;
+
+
+            // 8. User-Defined Alphabetical Comparison
+
+            let userAlphabet = "";
+
+            let minLength = Math.min(s1.length, s2.length);
+
+            for (let i = 0; i < minLength; i++) {
+
+                if (s1[i].toLowerCase() > s2[i].toLowerCase()) {
+                    userAlphabet = "String 2 comes first.";
+                    break;
+                }
+                else if (s1[i].toLowerCase() < s2[i].toLowerCase()) {
+                    userAlphabet = "String 1 comes first.";
+                    break;
+                }
+
+            }
+
+            if (userAlphabet === "") {
+
+                if (s1.length > s2.length) {
+                    userAlphabet = "String 2 comes first.";
+                }
+                else if (s1.length < s2.length) {
+                    userAlphabet = "String 1 comes first.";
+                }
+                else {
+                    userAlphabet = "Both strings are equal.";
+                }
+
+            }
+
+            document.getElementById("userAlphabetResult").textContent =
+                userAlphabet;
+
+        }
+
+
+        // Reset Function
+
+        function resetForm() {
+
+            document.getElementById("str1").value = "";
+            document.getElementById("str2").value = "";
+
+            let ids = [
+                "lengthResult",
+                "alphabetResult",
+                "regexResult",
+                "upperResult",
+                "lowerResult",
+                "strictResult",
+                "userLengthResult",
+                "userAlphabetResult"
+            ];
+
+            ids.forEach(function(id) {
+                document.getElementById(id).textContent = "-";
+            });
+
+        }
+
+    </script>
+
+</body>
+</html>

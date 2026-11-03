@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Countdown Timer</title>
+</head>
+
+<body>
+
+    <h1>Countdown Timer</h1>
+
+    <label>Select Target Date and Time:</label>
+
+    <input type="datetime-local" id="targetDate">
+
+    <br><br>
+
+    <button onclick="startCountdown()">Start Countdown</button>
+
+    <button onclick="resetTimer()">Reset</button>
+
+    <h2>Remaining Time</h2>
+
+    <p id="result">00 Days : 00 Hours : 00 Minutes : 00 Seconds</p>
+
+    <p id="message"></p>
+
+
+    <script>
+
+        let timerInterval = null;
+
+        // Start Countdown
+        function startCountdown() {
+
+            let input = document.getElementById("targetDate").value;
+
+            if (input === "") {
+                document.getElementById("message").textContent =
+                    "Please select date and time.";
+                return;
+            }
+
+            let target = new Date(input).getTime();
+
+            if (target <= Date.now()) {
+                document.getElementById("message").textContent =
+                    "Please select a future date and time.";
+                return;
+            }
+
+            clearInterval(timerInterval);
+
+            document.getElementById("message").textContent = "";
+
+            // updateCountdown(target);
+
+            timerInterval = setInterval(function() {
+                updateCountdown(target);
+            });
+        }
+
+
+        // Update Countdown
+        function updateCountdown(target) {
+
+            let now = Date.now();
+
+            let distance = target - now;
+
+            if (distance <= 0) {
+
+                clearInterval(timerInterval);
+
+                document.getElementById("result").textContent =
+                    "00 Days : 00 Hours : 00 Minutes : 00 Seconds";
+
+                document.getElementById("message").textContent =
+                    "Countdown Finished!";
+
+                return;
+            }
+
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+            let hours = Math.floor(
+                (distance % (1000 * 60 * 60 * 24)) /
+                (1000 * 60 * 60)
+            );
+            // let hours=Math.floor(distance/(1000*60*60));
+            let minutes = Math.floor(
+                (distance % (1000 * 60 * 60)) /
+                (1000 * 60)
+            );
+            // let minutes=Math.floor(distance/(1000*60));
+
+            let seconds = Math.floor(
+                (distance % (1000 * 60)) / 1000 
+            );
+            // let second=Math.floor(distance/1000);
+
+            document.getElementById("result").textContent =
+                days + " Days : " +
+                hours + " Hours : " +
+                minutes + " Minutes : " +
+                seconds + " Seconds";
+        }
+
+
+        // Reset Timer
+        function resetTimer() {
+
+            clearInterval(timerInterval);
+
+            timerInterval = null;
+
+            document.getElementById("targetDate").value = "";
+
+            document.getElementById("result").textContent =
+                "00 Days : 00 Hours : 00 Minutes : 00 Seconds";
+
+            document.getElementById("message").textContent = "";
+        }
+
+    </script>
+
+</body>
+</html>

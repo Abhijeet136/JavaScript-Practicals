@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Array Operations</title>
+</head>
+
+<body>
+
+    <h1>JavaScript Array Operations</h1>
+
+    <p>Remove, Search and Empty an Array</p>
+
+
+    <!-- Create Array -->
+
+    <h2>Create Array</h2>
+
+    Enter Maximum Array Length
+    <input type="number" id="maxLength" value="5">
+
+    <br>
+
+    <button onclick="setLength()">Set Array Length</button>
+    <button onclick="resetAll()">Reset</button>
+
+    <br>
+
+    Enter Array Element(s)
+    <input type="text" id="elementInput"
+           placeholder="Example: 1, 2, 3">
+
+    <br>
+
+    <button onclick="addElement()">Add Element</button>
+
+    <p id="addedElements">No elements added yet.</p>
+
+    <button onclick="setArray()">Set Array</button>
+
+
+    <!-- Array Operations -->
+
+    <h2>Array Operations</h2>
+
+    Element to Delete
+    <input type="text" id="deleteInput"
+           placeholder="Enter element">
+
+    <br>
+
+    Value to Search
+    <input type="text" id="searchInput"
+           placeholder="Enter value">
+
+    <br>
+
+    <button onclick="removeElement()">Remove Element</button>
+    <button onclick="checkValue()">Check Value</button>
+    <button onclick="emptyArray()">Empty Array</button>
+    <button onclick="resetAll()">Reset</button>
+
+
+    <!-- Current Array -->
+
+    <h2>Current Array</h2>
+
+    <p id="currentArray">Array not created yet.</p>
+
+
+    <!-- Standard Array Methods -->
+
+    <h2>Standard Array Methods</h2>
+
+    <p>Operations performed using built-in JavaScript array methods.</p>
+
+    <p>Remove Specific Element</p>
+    <p id="builtRemove">-</p>
+
+    <p>Check Specified Value</p>
+    <p id="builtSearch">-</p>
+
+    <p>Empty Array</p>
+    <p id="builtEmpty">-</p>
+
+
+    <!-- User Defined Logic -->
+
+    <h2>User-Defined Logic</h2>
+
+    <p>Remove Specific Element</p>
+    <p id="userRemove">-</p>
+
+    <p>Check Specified Value</p>
+    <p id="userSearch">-</p>
+
+    <p>Empty Array</p>
+    <p id="userEmpty">-</p>
+
+
+    <script>
+
+        let arr = [];
+        let max = 0;
+        let created = false;
+
+
+        // Set Maximum Array Length
+
+        function setLength() {
+
+            max = Number(document.getElementById("maxLength").value);
+
+            if (max <= 0 || !Number.isInteger(max)) {
+                alert("Enter a valid array length.");
+                return;
+            }
+
+            arr = [];
+            created = true;
+
+            document.getElementById("addedElements").textContent =
+                "No elements added yet.";
+
+            displayArray();
+
+        }
+
+
+        // Add Elements
+
+        function addElement() {
+
+            if (!created) {
+                alert("First set the array length.");
+                return;
+            }
+
+            let input = document.getElementById("elementInput").value;
+
+            if (input.trim() === "") {
+                alert("Enter array elements.");
+                return;
+            }
+
+            let elements = input.split(",").map(x => x.trim());
+
+            if (arr.length + elements.length > max) {
+                alert("Maximum array length exceeded.");
+                return;
+            }
+
+            for (let i = 0; i < elements.length; i++) {
+
+                if (elements[i] !== "") {
+                    arr.push(elements[i]);
+                }
+
+            }
+
+            document.getElementById("elementInput").value = "";
+
+            document.getElementById("addedElements").textContent =
+                "Elements added: " + arr.join(", ");
+
+            displayArray();
+
+        }
+
+
+        // Set Array
+
+        function setArray() {
+
+            if (!created) {
+                alert("First set the array length.");
+                return;
+            }
+
+            displayArray();
+
+        }
+
+
+        // Display Current Array
+
+        function displayArray() {
+
+            document.getElementById("currentArray").textContent =
+                "Array: [" + arr.join(", ") + "]";
+
+        }
+
+
+        // Remove Element
+
+        function removeElement() {
+
+            let value = document.getElementById("deleteInput").value;
+
+            if (value === "") {
+                alert("Enter element to delete.");
+                return;
+            }
+
+            // User-Defined Logic
+
+            let newArray = [];
+            let found = false;
+
+            for (let i = 0; i < arr.length; i++) {
+
+                if (arr[i] === value && !found) {
+                    found = true;
+                }
+                else {
+                    newArray.push(arr[i]);
+                }
+
+            }
+
+            if (found) {
+                arr = newArray;
+            }
+
+            document.getElementById("userRemove").textContent =
+                found ? "Element removed successfully." : "Element not found.";
+
+
+            // Built-in Method
+
+            let builtArray = [...arr];
+
+            let index = builtArray.indexOf(value);
+
+            if (index !== -1) {
+                builtArray.splice(index, 0, value);
+                builtArray.splice(index, 1);
+            }
+
+            document.getElementById("builtRemove").textContent =
+                index !== -1 ? "Element removed using splice()." :
+                "Element not found.";
+
+            document.getElementById("deleteInput").value = "";
+
+            displayArray();
+
+        }
+
+
+        // Check Value
+
+        function checkValue() {
+
+            let value = document.getElementById("searchInput").value;
+
+            if (value === "") {
+                alert("Enter a value to search.");
+                return;
+            }
+
+
+            // User-Defined Logic
+
+            let found = false;
+
+            for (let i = 0; i < arr.length; i++) {
+
+                if (arr[i] === value) {
+                    found = true;
+                    break;
+                }
+
+            }
+
+            document.getElementById("userSearch").textContent =
+                found ? "Value found in array." : "Value not found.";
+
+
+            // Built-in Method
+
+            let result = arr.includes(value);
+
+            document.getElementById("builtSearch").textContent =
+                result ? "Value found using includes()." :
+                "Value not found.";
+
+        }
+
+
+        // Empty Array
+
+        function emptyArray() {
+
+            // User-Defined Logic
+
+            arr.length = 0;
+
+            document.getElementById("userEmpty").textContent =
+                "Array emptied using length property.";
+
+
+            // Built-in Method
+
+            arr.splice(0, arr.length);
+
+            document.getElementById("builtEmpty").textContent =
+                "Array emptied using splice().";
+
+            displayArray();
+
+        }
+
+
+        // Reset All
+
+        function resetAll() {
+
+            arr = [];
+            max = 0;
+            created = false;
+
+            document.getElementById("maxLength").value = 5;
+            document.getElementById("elementInput").value = "";
+            document.getElementById("deleteInput").value = "";
+            document.getElementById("searchInput").value = "";
+
+            document.getElementById("addedElements").textContent =
+                "No elements added yet.";
+
+            document.getElementById("currentArray").textContent =
+                "Array not created yet.";
+
+            let ids = [
+                "builtRemove", "builtSearch", "builtEmpty",
+                "userRemove", "userSearch", "userEmpty"
+            ];
+
+            ids.forEach(function(id) {
+                document.getElementById(id).textContent = "-";
+            });
+
+        }
+
+    </script>
+
+</body>
+</html>
